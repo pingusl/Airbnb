@@ -67,7 +67,14 @@ export default function SignUpScreen({ setToken }) {
         <Button
           title="Sign up"
           onPress={async () => {
-            const validForm = true;
+            setMessagePassword("");
+            setMessageEmail("");
+            setMessageUserName("");
+            setMessageDescription("");
+            setMessagePassword("");
+            setMessagePassword("");
+
+            let validForm = true;
             if (confirmPassword !== password) {
               setMessagePassword("passwords doesn't match ");
               validForm = false;
@@ -110,7 +117,10 @@ export default function SignUpScreen({ setToken }) {
                 // setToken(userToken);
               } catch (error) {
                 console.log(error.message);
+                alert("Email already assign!");
               }
+            } else {
+              return null;
             }
           }}
         />
