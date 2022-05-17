@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,6 +18,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
+  const [data, setData] = useState("");
 
   const setToken = async (token) => {
     if (token) {
@@ -56,7 +58,7 @@ export default function App() {
           // No token found, user isn't signed in
           <>
             <Stack.Screen name="SignIn">
-              {() => <SignInScreen setToken={setToken} />}
+              {() => <SignInScreen setToken={setToken} userToken={userToken} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp">
               {() => <SignUpScreen setToken={setToken} />}
@@ -65,6 +67,7 @@ export default function App() {
         ) : (
           // User is signed in ! 🎉
           <Stack.Screen name="Tab" options={{ headerShown: false }}>
+            {(props) => <SignInScreen {...props} extraData={data} />}
             {() => (
               <Tab.Navigator
                 screenOptions={{
