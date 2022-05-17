@@ -67,7 +67,6 @@ export default function App() {
         ) : (
           // User is signed in ! 🎉
           <Stack.Screen name="Tab" options={{ headerShown: false }}>
-            {(props) => <SignInScreen {...props} extraData={data} />}
             {() => (
               <Tab.Navigator
                 screenOptions={{
