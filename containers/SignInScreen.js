@@ -1,8 +1,19 @@
 import { useNavigation } from "@react-navigation/core";
-import { Button, Text, TextInput, View, TouchableOpacity } from "react-native";
+import {
+  Button,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState } from "react";
 import axios from "axios";
+import { AsyncStorage } from "@react-native-async-storage/async-storage";
+
+import CustomInput from "../components/CustomInput";
 
 export default function SignInScreen({ setToken }) {
   const navigation = useNavigation();
@@ -15,28 +26,20 @@ export default function SignInScreen({ setToken }) {
   return (
     <View>
       <View>
-        <Text>
-          Email: {feedBackName}
-          {message}
-        </Text>
+        <Image
+          style={styles.coverImage}
+          source={require("../assets/logoAirbnb.png")}
+        ></Image>
+        <Text>Sign Up</Text>
+      </View>
+      <View>
+        <CustomInput placeholder="email" setState={setEmail} value={email} />
 
-        <TextInput
-          placeholder="Saisir email"
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          value={email}
-        />
-
-        <Text>Password: {feedBackPassword}</Text>
-
-        <TextInput
-          placeholder="Password"
-          secureTextEntry={false}
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
+        <CustomInput
+          placeholder="password"
+          setState={setPassword}
           value={password}
+          password={true}
         />
 
         <Button
@@ -64,6 +67,13 @@ export default function SignInScreen({ setToken }) {
                   alert("access granted!");
                   const userToken = response.data.token;
                   setToken(userToken);
+                  const storeData = async (value) => {
+                    try {
+                      await AsyncStorage.setItem("@userToken", userToken);
+                    } catch (e) {
+                      console.log(error);
+                    }
+                  };
                 }
               } catch (error) {
                 console.log(error);
@@ -83,3 +93,16 @@ export default function SignInScreen({ setToken }) {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+    alignItems: "center",
+  },
+
+  coverImage: {
+    height: 150,
+    width: 100,
+    marginRight: 20,
+  },
+});

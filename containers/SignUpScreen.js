@@ -1,11 +1,13 @@
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View, StyleSheet, Image } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState } from "react";
 import axios from "axios";
 
+import CustomInput from "../components/CustomInput";
+
 export default function SignUpScreen({ setToken }) {
   const [email, setEmail] = useState("seb1@lereacteur.io");
-  const [userName, setUserName] = useState("seb");
+  const [username, setUsername] = useState("seb");
   const [description, setDescription] = useState("reactNative");
   const [password, setPassword] = useState("pass");
   const [confirmPassword, setConfirmPassword] = useState("pass");
@@ -14,50 +16,51 @@ export default function SignUpScreen({ setToken }) {
   const [messageDescription, setMessageDescription] = useState("");
   const [messagePassword, setMessagePassword] = useState("");
   return (
-    <View>
+    <View style={styles.container}>
       <View>
-        <View>
-          <TextInput
-            placeholder="E-mail"
-            onChangeText={(text) => {
-              setEmail(text);
-            }}
-            value={email}
-          />
-
-          <TextInput
-            placeholder="Username"
-            onChangeText={(text) => {
-              setUserName(text);
-            }}
-            value={userName}
-          />
-
-          <TextInput
-            placeholder="Describ yourself in a few words..."
-            onChangeText={(text) => {
-              setDescription(text);
-            }}
-            value={description}
-          />
-
-          <TextInput
-            placeholder="Password"
-            secureTextEntry={true}
-            onChangeText={(text) => {
-              setPassword(text);
-            }}
-            value={password}
-          />
-          <TextInput
-            placeholder="Confirm Password"
-            secureTextEntry={true}
-            onChangeText={(text) => {
-              setConfirmPassword(text);
-            }}
-            value={confirmPassword}
-          />
-        </View>
+        <KeyboardAwareScrollView>
+          <View>
+            <Image
+              style={styles.coverImage}
+              source={require("../assets/logoAirbnb.png")}
+            ></Image>
+            <Text>Sign Up</Text>
+          </View>
+          <View style={styles.viewInput}>
+            <CustomInput
+              placeholder="email"
+              setState={setEmail}
+              value={email}
+            />
+            <CustomInput
+              placeholder="username"
+              setState={setUsername}
+              value={username}
+            />
+            <TextInput
+              value={description}
+              onChangeText={(text) => {
+                setDescription(text);
+              }}
+              multiline={true}
+              style={styles.bigInput}
+              placeholder="describe yourself in a few words ..."
+            />
+            {/* <Text>{description}</Text> */}
+            <CustomInput
+              placeholder="password"
+              setState={setPassword}
+              value={password}
+              password={true}
+            />
+            <CustomInput
+              placeholder="confirm password"
+              setState={setConfirmPassword}
+              value={confirmPassword}
+              password
+            />
+          </View>
+        </KeyboardAwareScrollView>
 
         <Text>
           {messagePassword} {messageEmail} {messageUserName}{" "}
@@ -83,11 +86,11 @@ export default function SignUpScreen({ setToken }) {
               setMessageEmail("Missing eMail ");
               validForm = false;
             }
-            if (!userName) {
+            if (!username) {
               setMessageUserName("Missing username ");
               validForm = false;
             }
-            if (!userName) {
+            if (!description) {
               setMessageDescription("Missing description ");
               validForm = false;
             }
@@ -103,7 +106,7 @@ export default function SignUpScreen({ setToken }) {
               try {
                 const params = {
                   email: email,
-                  username: userName,
+                  username: username,
                   description: description,
                   password: password,
                 };
@@ -117,7 +120,10 @@ export default function SignUpScreen({ setToken }) {
                 // setToken(userToken);
               } catch (error) {
                 console.log(error.message);
-                alert("Email already assign!");
+                console.log(error.response.data);
+                if (error.response.data) {
+                  alert(error.response.data.error);
+                }
               }
             } else {
               return null;
@@ -129,3 +135,36 @@ export default function SignUpScreen({ setToken }) {
     </View>
   );
 }
+
+// A Faire Créer un CustomInput en composant de façon a utiliser toujours le même objet pour tous les inputs.
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+    alignItems: "center",
+  },
+
+  coverImage: {
+    height: 150,
+    width: 100,
+    marginRight: 20,
+  },
+  viewInput: {
+    paddingHorizontal: 5,
+  },
+  input: {
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    borderColor: "red",
+    borderBottomWidth: 2,
+    margin: 15,
+  },
+  inputDescription: {
+    height: 80,
+    alignContent: "flex-start",
+    paddingHorizontal: 10,
+    borderColor: "red",
+    borderWidth: 2,
+    margin: 15,
+  },
+});
