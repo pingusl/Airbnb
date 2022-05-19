@@ -70,12 +70,15 @@ export default function HomeScreen() {
 
                 return (
                   <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("Room");
+                      }}
+                    >
                       <Image
                         style={styles.coverImage}
                         source={{
                           uri: item.photos[0].url,
-                          //uri: "https://a2.muscache.com/im/pictures/a560cdc0-425d-4d7b-ab8a-f98481eeb23f.jpg",
                         }}
                       ></Image>
                     </TouchableOpacity>
