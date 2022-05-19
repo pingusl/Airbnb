@@ -24,7 +24,7 @@ export default function HomeScreen() {
       const response = await axios.get(
         "https://express-airbnb-api.herokuapp.com/rooms"
       );
-      //console.log(response.data[0].photos[1].url);
+      //console.log(response.data[0]);
       setData(response.data);
       setIsLoading(false);
     };
@@ -66,13 +66,13 @@ export default function HomeScreen() {
               renderItem={({ item }) => {
                 //console.log(item.photos);
                 // console.log(item.user.account.photo.url);
-                const numberStars = item.ratingValue;
+                const idRoom = item._id;
 
                 return (
                   <View>
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate("Room");
+                        navigation.navigate("Room", { idRoom });
                       }}
                     >
                       <Image
