@@ -11,6 +11,8 @@ import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import SplashScreen from "./containers/SplashScreen";
+
+//----Components----//
 import LogoTitle from "./components/LogoTitle";
 
 const Tab = createBottomTabNavigator();
@@ -57,11 +59,21 @@ export default function App() {
         {userToken === null ? (
           // No token found, user isn't signed in
           <>
-            <Stack.Screen name="SignIn">
-              {() => <SignInScreen setToken={setToken} userToken={userToken} />}
+            <Stack.Screen
+              name="SignIn"
+              options={{
+                headerShown: false,
+              }}
+            >
+              {(props) => <SignInScreen {...props} setToken={setToken} />}
             </Stack.Screen>
-            <Stack.Screen name="SignUp">
-              {() => <SignUpScreen setToken={setToken} />}
+            <Stack.Screen
+              name="SignUp"
+              options={{
+                headerShown: false,
+              }}
+            >
+              {(props) => <SignUpScreen {...props} setToken={setToken} />}
             </Stack.Screen>
           </>
         ) : (

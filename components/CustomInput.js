@@ -17,7 +17,7 @@ const CustomInput = ({ placeholder, setState, value, password }) => {
 const styles = StyleSheet.create({
   input: {
     // backgroundColor: "red",
-    width: "80%",
+    //width: "80%",
     marginTop: 30,
     borderColor: "#FFBAC0",
     borderBottomWidth: 2,
