@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -29,6 +30,18 @@ export default function HomeScreen() {
     };
     fetchData();
   }, []);
+
+  const displayStars = (num) => {
+    const tab = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < num) {
+        tab.push(<Entypo key={i} name="star" size={24} color="#FCB101" />);
+      } else {
+        tab.push(<Entypo key={i} name="star" size={24} color="grey" />);
+      }
+    }
+    return tab;
+  };
 
   return (
     <View>
@@ -51,7 +64,7 @@ export default function HomeScreen() {
               //   elem._id;
               // }}
               renderItem={({ item }) => {
-                console.log(item.photos);
+                //console.log(item.photos);
                 // console.log(item.user.account.photo.url);
                 const numberStars = item.ratingValue;
 
@@ -77,11 +90,9 @@ export default function HomeScreen() {
                         <Text numberOfLines={1} ellipsizeMode="tail">
                           {item.title}
                         </Text>
-                        <Text>{item.ratingValue}</Text>
-                        <Image
-                          style={styles.star}
-                          source={require("../assets/star-on.png")}
-                        ></Image>
+                        <View style={styles.rating}>
+                          {displayStars(item.ratingValue)}
+                        </View>
                         <Text>{item.reviews}</Text>
                       </View>
                       <View style={styles.userView}>
@@ -149,8 +160,7 @@ const styles = StyleSheet.create({
   textInfoView: {
     flex: 4,
   },
-  star: {
-    height: 30,
-    width: 30,
+  rating: {
+    flexDirection: "row",
   },
 });

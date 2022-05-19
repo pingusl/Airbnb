@@ -41,7 +41,7 @@ export default function SignInScreen({ setToken, navigation }) {
           params,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.token !== null) {
           const userToken = response.data.token;
           setToken(userToken);

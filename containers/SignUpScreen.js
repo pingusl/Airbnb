@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState } from "react";
@@ -13,7 +14,7 @@ import axios from "axios";
 
 import CustomInput from "../components/CustomInput";
 
-export default function handleSubmit({ setToken, navigation }) {
+export default function SignUpScreen({ setToken, navigation }) {
   console.log(navigation.setParams.setToken);
   const [email, setEmail] = useState("seb1@lereacteur.io");
   const [username, setUsername] = useState("seb");
@@ -21,9 +22,60 @@ export default function handleSubmit({ setToken, navigation }) {
   const [password, setPassword] = useState("pass");
   const [confirmPassword, setConfirmPassword] = useState("pass");
   const [messageEmail, setMessageEmail] = useState("");
-  const [messageUserName, setMessageUserName] = useState("");
+  const [messageUsername, setMessageUsername] = useState("");
   const [messageDescription, setMessageDescription] = useState("");
   const [messagePassword, setMessagePassword] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleSubmit = () => {
+    let error = 0;
+    if (password === confirmPassword) {
+      if (!email) {
+        setMessageEmail("Missing Email");
+        error = error + 1;
+      }
+      if (!username) {
+        setMessageUsername("Missing Username");
+        error = error + 1;
+      }
+      if (!description) {
+        setMessageDescription("Missing Description");
+        error = error + 1;
+      }
+      if (!password) {
+        setMessagePassword("Missing Password");
+        error = error + 1;
+      }
+      if (!confirmPassword) {
+        setMessagePassword("Missing Confirm Password");
+        error = error + 1;
+      }
+    } else {
+      setMessagePassword("Password & confirm Password doesn't match!");
+      error = error + 1;
+    }
+    if (error === 0) {
+      const params = {
+        email: email,
+        username: username,
+        description: description,
+        password: password,
+      };
+      try {
+        const response = axios.post(
+          "https://express-airbnb-api.herokuapp.com/user/sign_up",
+          params,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        console.log(error.response.data);
+        //setToken(response.data.token);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setMessagePassword("Default ");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -85,7 +137,7 @@ export default function handleSubmit({ setToken, navigation }) {
         </KeyboardAwareScrollView>
 
         <Text>
-          {messagePassword} {messageEmail} {messageUserName}
+          {messagePassword} {messageEmail} {messageUsername}
           {messageDescription}
         </Text>
       </View>
