@@ -113,7 +113,16 @@ export default function RoomScreen(props) {
             </View>
           </View>
           <View>
-            <MapView></MapView>
+            <MapView
+              style={styles.coverImage}
+              initialRegion={{
+                latitude: 48.856614,
+                longitude: 2.3522219,
+                latitudeDelta: 0.2,
+                longitudeDelta: 0.2,
+              }}
+              showsUserLocation={true}
+            ></MapView>
             <Text>{data.title}</Text>
             <Text>{data.ratingValue}</Text>
           </View>
