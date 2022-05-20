@@ -15,7 +15,6 @@ import axios from "axios";
 import { Entypo } from "@expo/vector-icons";
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState("");
 
@@ -42,7 +41,7 @@ export default function HomeScreen() {
     }
     return tab;
   };
-
+  const navigation = useNavigation();
   return (
     <View>
       {isLoading ? (
@@ -64,15 +63,14 @@ export default function HomeScreen() {
               //   elem._id;
               // }}
               renderItem={({ item }) => {
-                //console.log(item.photos);
+                //console.log(item._id);
                 // console.log(item.user.account.photo.url);
-                const idRoom = item._id;
 
                 return (
                   <View>
                     <TouchableOpacity
                       onPress={() => {
-                        navigation.navigate("Room", { idRoom });
+                        navigation.navigate("Room", { idRoom: item._id });
                       }}
                     >
                       <Image

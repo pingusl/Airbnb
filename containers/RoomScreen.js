@@ -13,7 +13,8 @@ import { Entypo } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import MapView from "react-native-maps";
 
-export default function RoomScreen(props) {
+export default function RoomScreen({ route }) {
+  console.log(route);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -31,6 +32,7 @@ export default function RoomScreen(props) {
       }
 
       let location = await Location.getCurrentPositionAsync({});
+      //   console.log(location);
       setLocation(location);
     })();
   }, []);
@@ -40,7 +42,7 @@ export default function RoomScreen(props) {
       const id = "58ff73cc1765a9979391c532";
       try {
         const response = await axios.get(
-          `https://express-airbnb-api.herokuapp.com/rooms/${id}`
+          `https://express-airbnb-api.herokuapp.com/rooms/${route.params.idRoom}`
         );
         setData(response.data);
 
@@ -114,17 +116,22 @@ export default function RoomScreen(props) {
           </View>
           <View>
             <MapView
-              style={styles.coverImage}
+              style={styles.map}
               initialRegion={{
-                latitude: 48.856614,
-                longitude: 2.3522219,
+                latitude: data.location[1],
+                longitude: data.location[0],
                 latitudeDelta: 0.2,
                 longitudeDelta: 0.2,
               }}
               showsUserLocation={true}
-            ></MapView>
-            <Text>{data.title}</Text>
-            <Text>{data.ratingValue}</Text>
+            >
+              <MapView.Marker
+                coordinate={{
+                  latitude: data.location[1],
+                  longitude: data.location[0],
+                }}
+              />
+            </MapView>
           </View>
         </View>
       )}
@@ -141,6 +148,12 @@ const styles = StyleSheet.create({
   },
   coverImage: {
     height: 150,
+    width: 350,
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  map: {
+    height: 350,
     width: 350,
     marginRight: 20,
     marginBottom: 10,

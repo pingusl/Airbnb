@@ -118,9 +118,8 @@ export default function App() {
                           headerTitleStyle: { color: "Black" },
                           headerTitle: (props) => <LogoTitle {...props} />,
                         }}
-                      >
-                        {() => <RoomScreen />}
-                      </Stack.Screen>
+                        component={RoomScreen}
+                      ></Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
