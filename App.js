@@ -1,15 +1,21 @@
 import React, { useState, useEffect, Image } from "react";
-import { Text } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import { Text } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+
 import HomeScreen from "./containers/HomeScreen";
 import RoomScreen from "./containers/RoomScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import ArroundMeScreen from "./containers/ArroundMeScreen";
 import SplashScreen from "./containers/SplashScreen";
 
 //----Components----//
@@ -120,6 +126,32 @@ export default function App() {
                         }}
                         component={RoomScreen}
                       ></Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen
+                  name="TabArroundMe"
+                  options={{
+                    tabBarLabel: "ArroundMe",
+                    tabBarIcon: ({ color, size }) => (
+                      <FontAwesome5
+                        name={"map-marker-alt"}
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="AroundMe"
+                        options={{
+                          title: "AroundMe",
+                        }}
+                      >
+                        {() => <ArroundMeScreen setToken={setToken} />}
+                      </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
