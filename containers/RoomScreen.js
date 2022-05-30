@@ -14,7 +14,7 @@ import * as Location from "expo-location";
 import MapView from "react-native-maps";
 
 export default function RoomScreen({ route }) {
-  console.log(route);
+  //console.log(route);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -66,6 +66,7 @@ export default function RoomScreen({ route }) {
     }
     return tab;
   };
+
   return (
     <View style={styles.container}>
       {isLoading ? (

@@ -93,6 +93,7 @@ export default function App() {
                   tabBarInactiveTintColor: "gray",
                 }}
               >
+                {/* Home Tabulation */}
                 <Tab.Screen
                   name="TabHome"
                   options={{
@@ -104,6 +105,7 @@ export default function App() {
                 >
                   {() => (
                     <Stack.Navigator>
+                      {/* Home Screen */}
                       <Stack.Screen
                         name="Home"
                         options={{
@@ -115,7 +117,7 @@ export default function App() {
                       >
                         {() => <HomeScreen />}
                       </Stack.Screen>
-
+                      {/* Room Screen */}
                       <Stack.Screen
                         name="Room"
                         options={{
@@ -129,6 +131,7 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+                {/* ArroundMe Tabulation */}
                 <Tab.Screen
                   name="TabArroundMe"
                   options={{
@@ -144,6 +147,7 @@ export default function App() {
                 >
                   {() => (
                     <Stack.Navigator>
+                      {/* AroundMe Screen */}
                       <Stack.Screen
                         name="AroundMe"
                         options={{
@@ -155,6 +159,7 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+                {/* Setting Tabulation */}
                 <Tab.Screen
                   name="TabSettings"
                   options={{
@@ -170,6 +175,7 @@ export default function App() {
                 >
                   {() => (
                     <Stack.Navigator>
+                      {/* Setting Screen */}
                       <Stack.Screen
                         name="Settings"
                         options={{
